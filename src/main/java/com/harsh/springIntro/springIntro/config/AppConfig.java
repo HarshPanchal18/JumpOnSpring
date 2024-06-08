@@ -3,6 +3,7 @@ package com.harsh.springIntro.springIntro.config;
 import com.harsh.springIntro.springIntro.DB;
 import com.harsh.springIntro.springIntro.DevDB;
 import com.harsh.springIntro.springIntro.ProdDB;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,5 +22,10 @@ public class AppConfig {
     @ConditionalOnProperty(name= "project.mode", havingValue = "production")
     public DB getDevProdBean(){
         return new ProdDB();
+    }
+
+    @Bean
+    public ModelMapper getModelMapper() {
+        return new ModelMapper();
     }
 }

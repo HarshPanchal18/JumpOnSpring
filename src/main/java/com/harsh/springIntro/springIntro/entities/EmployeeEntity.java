@@ -1,24 +1,22 @@
-package com.harsh.springIntro.springIntro.dto;
+package com.harsh.springIntro.springIntro.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "employees")
 @Data // For getters, setters
 @AllArgsConstructor
 @NoArgsConstructor // Default constructor
-public class EmployeeDTO {
-
+public class EmployeeEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private LocalDate dateOfJoining;
-
-    // Before: true -> false
-    @JsonProperty("isActive") // For clean boolean value in response
-    // After: true -> true
     private boolean isActive;
-
 }

@@ -6,19 +6,19 @@ package com.harsh.springIntro.springIntro.controllers;
 // DELETE /employees/{id}
 
 import com.harsh.springIntro.springIntro.dto.EmployeeDTO;
+import com.harsh.springIntro.springIntro.services.EmployeeService;
 import jakarta.websocket.server.PathParam;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 @RestController
+@RequestMapping(path = "/employees")
 public class EmployeeController {
 
-    @GetMapping(path = "/employees")
+    /*@GetMapping
     public ArrayList<EmployeeDTO> getEmployees(
             @PathParam("sortBy") String sortBy,
             @PathParam("sortBy") Integer limit
@@ -70,10 +70,21 @@ public class EmployeeController {
 
         return result;
     }
+*/
+    private final EmployeeService employeeService;
 
-    @GetMapping(path = "/employee/{id}")
-    public EmployeeDTO getEmployeeById(@PathVariable("id") Long empId) {
-        return new EmployeeDTO(empId, "Harsh", LocalDate.of(2024, 1, 5), true);
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
+    @GetMapping(path = "/{id}")
+    public EmployeeDTO getEmployeeById(@PathVariable("id") Long empId) {
+        return employeeService.getEmployeeById(empId);
+        //return new EmployeeDTO(empId, "Harsh", LocalDate.of(2024, 1, 5), true);
+    }
+
+    @PostMapping
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return employeeService.createNewEmployee(employeeDTO);
+    }
 }

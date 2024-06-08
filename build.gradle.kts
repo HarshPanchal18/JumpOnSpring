@@ -23,6 +23,11 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa") // query optimization
+	implementation("org.modelmapper:modelmapper:3.0.0") // Mapping objects to each other
+	// https://mvnrepository.com/artifact/com.h2database/h2
+	runtimeOnly("com.h2database:h2:2.2.224")
+
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
