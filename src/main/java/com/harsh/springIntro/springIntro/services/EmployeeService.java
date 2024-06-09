@@ -6,6 +6,10 @@ import com.harsh.springIntro.springIntro.repositories.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeService {
 
@@ -27,5 +31,22 @@ public class EmployeeService {
     public EmployeeDTO createNewEmployee(EmployeeDTO employeeDTO) {
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         return modelMapper.map(employeeRepository.save(employeeEntity), EmployeeDTO.class);
+    }
+
+    public List<EmployeeDTO> getEmployees() {
+        List<EmployeeDTO> employees = new ArrayList<>();
+        for (EmployeeEntity empEntity : employeeRepository.findAll()) {
+            employees.add(modelMapper.map(empEntity, EmployeeDTO.class));
+        }
+        return employees;
+    }
+
+    public Boolean deleteByEmployeeId(Long id) {
+        boolean isEmpPresent = employeeRepository.existsById(id);
+        if (isEmpPresent) {
+            employeeRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
